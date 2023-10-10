@@ -52,3 +52,11 @@ module "network_security_group" {
   allowed_cidr           = var.allowed_cidr
 }
 
+module "app_service_plan" {
+  source = "../../modules/app_service_plan"
+
+  common              = var.common
+  resource_group_name = module.resource_group.resource_group_name
+  app_service_plan    = var.app_service_plan
+}
+

@@ -174,3 +174,14 @@ variable "network_security_group" {
   }
 }
 
+variable "app_service_plan" {
+  type = map(map(string))
+  default = {
+    function = {
+      name     = "function"
+      os_type  = "Linux"
+      sku_name = "B1"
+    }
+  }
+}
+
