@@ -23,8 +23,8 @@ provider "azurerm" {
 data "azurerm_subscription" "primary" {}
 
 resource "random_integer" "num" {
-  min = 10000
-  max = 99999
+  min = 1000
+  max = 9999
 }
 
 module "resource_group" {
@@ -50,6 +50,17 @@ module "network_security_group" {
   network_security_group = var.network_security_group
   subnet                 = module.network.subnet
   allowed_cidr           = var.allowed_cidr
+}
+
+module "storage" {
+  source = "../../modules/storage"
+
+  common              = var.common
+  resource_group_name = module.resource_group.resource_group_name
+  random              = local.common.random
+  storage             = var.storage
+  blob_container      = var.blob_container
+  allowed_cidr        = var.allowed_cidr
 }
 
 module "app_service_plan" {
