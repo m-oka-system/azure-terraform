@@ -298,3 +298,72 @@ variable "app_service_plan" {
   }
 }
 
+variable "function" {
+  type = map(object({
+    name                          = string
+    target_service_plan           = string
+    target_subnet                 = string
+    target_storage_account        = string
+    functions_extension_version   = string
+    python_version                = string
+    https_only                    = bool
+    public_network_access_enabled = bool
+    site_config = object({
+      always_on                   = bool
+      ftps_state                  = string
+      vnet_route_all_enabled      = bool
+      scm_use_main_ip_restriction = bool
+    })
+    ip_restriction = map(object({
+      name        = string
+      priority    = number
+      action      = string
+      ip_address  = string
+      service_tag = string
+    }))
+    scm_ip_restriction = map(object({
+      name        = string
+      priority    = number
+      action      = string
+      ip_address  = string
+      service_tag = string
+    }))
+  }))
+  default = {
+    http_trigger = {
+      name                          = "function"
+      target_service_plan           = "function"
+      target_subnet                 = "function"
+      target_storage_account        = "function"
+      functions_extension_version   = "~4"
+      python_version                = "3.10"
+      https_only                    = true
+      public_network_access_enabled = true
+      site_config = {
+        always_on                   = true
+        ftps_state                  = "Disabled"
+        vnet_route_all_enabled      = true
+        scm_use_main_ip_restriction = false
+      }
+      ip_restriction = {
+        myip = {
+          name        = "AllowMyIP"
+          priority    = 100
+          action      = "Allow"
+          ip_address  = "MyIP"
+          service_tag = null
+        }
+      }
+      scm_ip_restriction = {
+        myip = {
+          name        = "AllowMyIP"
+          priority    = 100
+          action      = "Allow"
+          ip_address  = "MyIP"
+          service_tag = null
+        }
+      }
+    }
+  }
+}
+
