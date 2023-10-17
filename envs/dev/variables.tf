@@ -304,6 +304,7 @@ variable "function" {
     target_service_plan           = string
     target_subnet                 = string
     target_storage_account        = string
+    target_application_insights   = string
     functions_extension_version   = string
     python_version                = string
     https_only                    = bool
@@ -335,6 +336,7 @@ variable "function" {
       target_service_plan           = "function"
       target_subnet                 = "function"
       target_storage_account        = "function"
+      target_application_insights   = "function"
       functions_extension_version   = "~4"
       python_version                = "3.10"
       https_only                    = true

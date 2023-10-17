@@ -74,13 +74,14 @@ module "app_service_plan" {
 module "function" {
   source = "../../modules/function"
 
-  common              = var.common
-  resource_group_name = module.resource_group.resource_group_name
-  function            = var.function
-  allowed_cidr        = var.allowed_cidr
-  app_service_plan    = module.app_service_plan.app_service_plan
-  subnet              = module.network.subnet
-  storage_account     = module.storage.storage_account
+  common               = var.common
+  resource_group_name  = module.resource_group.resource_group_name
+  function             = var.function
+  allowed_cidr         = var.allowed_cidr
+  app_service_plan     = module.app_service_plan.app_service_plan
+  subnet               = module.network.subnet
+  storage_account      = module.storage.storage_account
+  application_insights = module.application_insights.application_insights
 }
 
 module "log_analytics" {

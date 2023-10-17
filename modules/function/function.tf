@@ -20,12 +20,11 @@ resource "azurerm_linux_function_app" "this" {
   }
 
   site_config {
-    always_on                   = each.value.site_config.always_on
-    ftps_state                  = each.value.site_config.ftps_state
-    vnet_route_all_enabled      = each.value.site_config.vnet_route_all_enabled
-    scm_use_main_ip_restriction = each.value.site_config.scm_use_main_ip_restriction
-    # application_insights_connection_string = ""
-    # application_insights_key               = ""
+    always_on                              = each.value.site_config.always_on
+    ftps_state                             = each.value.site_config.ftps_state
+    vnet_route_all_enabled                 = each.value.site_config.vnet_route_all_enabled
+    scm_use_main_ip_restriction            = each.value.site_config.scm_use_main_ip_restriction
+    application_insights_connection_string = var.application_insights[each.value.target_application_insights].connection_string
 
     dynamic "ip_restriction" {
       for_each = each.value.ip_restriction
