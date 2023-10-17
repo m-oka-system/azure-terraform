@@ -100,3 +100,11 @@ module "application_insights" {
   application_insights = var.application_insights
   log_analytics        = module.log_analytics.log_analytics
 }
+
+module "container_registry" {
+  source = "../../modules/container_registry"
+
+  common              = var.common
+  resource_group_name = module.resource_group.resource_group_name
+  container_registry  = var.container_registry
+}
