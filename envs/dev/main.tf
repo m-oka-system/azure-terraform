@@ -84,6 +84,16 @@ module "function" {
   application_insights = module.application_insights.application_insights
 }
 
+module "user_assigned_identity" {
+  source = "../../modules/user_assigned_identity"
+
+  common                 = var.common
+  resource_group_name    = module.resource_group.resource_group_name
+  subscription_id        = local.common.subscription_id
+  user_assigned_identity = var.user_assigned_identity
+  role_assignment        = var.role_assignment
+}
+
 module "log_analytics" {
   source = "../../modules/log_analytics"
 

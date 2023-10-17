@@ -388,6 +388,49 @@ variable "container_registry" {
   }
 }
 
+variable "user_assigned_identity" {
+  type = map(object({
+    name = string
+  }))
+  default = {
+    app = {
+      name = "app"
+    }
+    function = {
+      name = "function"
+    }
+  }
+}
+
+variable "role_assignment" {
+  type = map(object({
+    target_identity      = string
+    role_definition_name = string
+  }))
+  default = {
+    app_acr_pull = {
+      target_identity      = "app"
+      role_definition_name = "AcrPull"
+    }
+    app_key_vault_secrets_user = {
+      target_identity      = "app"
+      role_definition_name = "Key Vault Secrets User"
+    }
+    app_storage_blob_data_contributor = {
+      target_identity      = "app"
+      role_definition_name = "Storage Blob Data Contributor"
+    }
+    function_acr_pull = {
+      target_identity      = "function"
+      role_definition_name = "AcrPull"
+    }
+    function_key_vault_secrets_user = {
+      target_identity      = "function"
+      role_definition_name = "Key Vault Secrets User"
+    }
+  }
+}
+
 variable "log_analytics" {
   type = map(object({
     sku                        = string
