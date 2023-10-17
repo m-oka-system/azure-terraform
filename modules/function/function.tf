@@ -10,6 +10,7 @@ resource "azurerm_linux_function_app" "this" {
   functions_extension_version   = each.value.functions_extension_version
   https_only                    = each.value.https_only
   public_network_access_enabled = each.value.public_network_access_enabled
+  builtin_logging_enabled       = each.value.builtin_logging_enabled
 
   app_settings = {
     "AzureWebJobsFeatureFlags"       = "EnableWorkerIndexing"

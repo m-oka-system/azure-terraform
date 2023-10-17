@@ -309,6 +309,7 @@ variable "function" {
     python_version                = string
     https_only                    = bool
     public_network_access_enabled = bool
+    builtin_logging_enabled       = bool
     site_config = object({
       always_on                   = bool
       ftps_state                  = string
@@ -341,6 +342,7 @@ variable "function" {
       python_version                = "3.10"
       https_only                    = true
       public_network_access_enabled = true
+      builtin_logging_enabled       = false
       site_config = {
         always_on                   = true
         ftps_state                  = "Disabled"
