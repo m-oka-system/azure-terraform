@@ -82,3 +82,11 @@ module "function" {
   subnet              = module.network.subnet
   storage_account     = module.storage.storage_account
 }
+
+module "log_analytics" {
+  source = "../../modules/log_analytics"
+
+  common              = var.common
+  resource_group_name = module.resource_group.resource_group_name
+  log_analytics       = var.log_analytics
+}
