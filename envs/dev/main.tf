@@ -118,3 +118,14 @@ module "container_registry" {
   resource_group_name = module.resource_group.resource_group_name
   container_registry  = var.container_registry
 }
+
+module "key_vault" {
+  source = "../../modules/key_vault"
+
+  common              = var.common
+  resource_group_name = module.resource_group.resource_group_name
+  key_vault           = var.key_vault
+  allowed_cidr        = var.allowed_cidr
+  client_ip_address   = local.common.client_ip_address
+  tenant_id           = local.common.tenant_id
+}
