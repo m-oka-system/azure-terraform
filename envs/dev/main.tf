@@ -20,6 +20,12 @@ provider "azurerm" {
   }
 }
 
+provider "http" {}
+
+data "http" "ipify" {
+  url = "http://api.ipify.org"
+}
+
 data "azurerm_subscription" "primary" {}
 
 resource "random_integer" "num" {
@@ -84,6 +90,14 @@ module "function" {
   application_insights = module.application_insights.application_insights
 }
 
+module "container_registry" {
+  source = "../../modules/container_registry"
+
+  common              = var.common
+  resource_group_name = module.resource_group.resource_group_name
+  container_registry  = var.container_registry
+}
+
 module "user_assigned_identity" {
   source = "../../modules/user_assigned_identity"
 
@@ -109,14 +123,6 @@ module "application_insights" {
   resource_group_name  = module.resource_group.resource_group_name
   application_insights = var.application_insights
   log_analytics        = module.log_analytics.log_analytics
-}
-
-module "container_registry" {
-  source = "../../modules/container_registry"
-
-  common              = var.common
-  resource_group_name = module.resource_group.resource_group_name
-  container_registry  = var.container_registry
 }
 
 module "key_vault" {
