@@ -83,11 +83,14 @@ module "function" {
   common               = var.common
   resource_group_name  = module.resource_group.resource_group_name
   function             = var.function
-  allowed_cidr         = var.allowed_cidr
+  app_settings         = local.functions.app_settings
   app_service_plan     = module.app_service_plan.app_service_plan
+  allowed_cidr         = var.allowed_cidr
   subnet               = module.network.subnet
-  storage_account      = module.storage.storage_account
   application_insights = module.application_insights.application_insights
+  container_registry   = module.container_registry.container_registry
+  identity             = module.user_assigned_identity.user_assigned_identity
+  key_vault_secret     = module.key_vault_secret.key_vault_secret
 }
 
 module "container_registry" {

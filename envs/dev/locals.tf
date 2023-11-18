@@ -9,10 +9,21 @@ locals {
   key_vault_secret = {
     target_key_vault = "app"
     secrets = {
-      DOCKER_REGISTRY_SERVER_URL                 = "https://${module.container_registry.container_registry["app"].login_server}"
       DOCKER_REGISTRY_SERVER_PASSWORD            = module.container_registry.container_registry["app"].admin_password
       DOCKER_REGISTRY_SERVER_USERNAME            = module.container_registry.container_registry["app"].admin_username
       FUNCTION_STORAGE_ACCOUNT_CONNECTION_STRING = module.storage.storage_account["function"].primary_connection_string
+    }
+  }
+
+  functions = {
+    app_settings = {
+      FUNCTIONS_WORKER_RUNTIME            = "python"
+      WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
+      WEBSITE_PULL_IMAGE_OVER_VNET        = true
+      WEBSITE_HTTPLOGGING_RETENTION_DAYS  = var.function["function"].app_service_logs.retention_period_days
+      DOCKER_REGISTRY_SERVER_URL          = "https://${module.container_registry.container_registry["app"].login_server}"
+      DOCKER_REGISTRY_SERVER_USERNAME     = "@Microsoft.KeyVault(VaultName=${module.key_vault.key_vault["app"].name};SecretName=DOCKER-REGISTRY-SERVER-USERNAME)"
+      DOCKER_REGISTRY_SERVER_PASSWORD     = "@Microsoft.KeyVault(VaultName=${module.key_vault.key_vault["app"].name};SecretName=DOCKER-REGISTRY-SERVER-PASSWORD)"
     }
   }
 }

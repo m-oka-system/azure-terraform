@@ -1,8 +1,11 @@
 variable "common" {}
 variable "resource_group_name" {}
 variable "function" {}
-variable "allowed_cidr" {}
+variable "app_settings" {}
 variable "app_service_plan" {}
+variable "allowed_cidr" {}
 variable "subnet" {}
-variable "storage_account" {}
 variable "application_insights" {}
+variable "container_registry" {}
+variable "identity" {}
+variable "key_vault_secret" {}

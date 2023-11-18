@@ -303,18 +303,21 @@ variable "function" {
     name                          = string
     target_service_plan           = string
     target_subnet                 = string
-    target_storage_account        = string
+    target_user_assigned_identity = string
+    target_key_vault_secret       = string
+    target_user_assigned_identity = string
     target_application_insights   = string
     functions_extension_version   = string
-    python_version                = string
     https_only                    = bool
     public_network_access_enabled = bool
     builtin_logging_enabled       = bool
+    enable_deploy_slot            = bool
     site_config = object({
-      always_on                   = bool
-      ftps_state                  = string
-      vnet_route_all_enabled      = bool
-      scm_use_main_ip_restriction = bool
+      always_on                               = bool
+      ftps_state                              = string
+      vnet_route_all_enabled                  = bool
+      scm_use_main_ip_restriction             = bool
+      container_registry_use_managed_identity = bool
     })
     ip_restriction = map(object({
       name        = string
@@ -330,24 +333,31 @@ variable "function" {
       ip_address  = string
       service_tag = string
     }))
+    app_service_logs = object({
+      disk_quota_mb         = number
+      retention_period_days = number
+    })
   }))
   default = {
-    http_trigger = {
+    function = {
       name                          = "function"
       target_service_plan           = "function"
       target_subnet                 = "function"
-      target_storage_account        = "function"
+      target_user_assigned_identity = "function"
+      target_key_vault_secret       = "FUNCTION_STORAGE_ACCOUNT_CONNECTION_STRING"
+      target_user_assigned_identity = "function"
       target_application_insights   = "function"
       functions_extension_version   = "~4"
-      python_version                = "3.10"
       https_only                    = true
       public_network_access_enabled = true
       builtin_logging_enabled       = false
+      enable_deploy_slot            = false
       site_config = {
-        always_on                   = true
-        ftps_state                  = "Disabled"
-        vnet_route_all_enabled      = true
-        scm_use_main_ip_restriction = false
+        always_on                               = true
+        ftps_state                              = "Disabled"
+        vnet_route_all_enabled                  = true
+        scm_use_main_ip_restriction             = false
+        container_registry_use_managed_identity = true
       }
       ip_restriction = {
         myip = {
@@ -359,13 +369,24 @@ variable "function" {
         }
       }
       scm_ip_restriction = {
+        devops = {
+          name        = "AllowDevOps"
+          priority    = 100
+          action      = "Allow"
+          ip_address  = null
+          service_tag = "AzureCloud"
+        }
         myip = {
           name        = "AllowMyIP"
-          priority    = 100
+          priority    = 200
           action      = "Allow"
           ip_address  = "MyIP"
           service_tag = null
         }
+      }
+      app_service_logs = {
+        disk_quota_mb         = 35
+        retention_period_days = 7
       }
     }
   }
