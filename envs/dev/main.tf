@@ -135,3 +135,10 @@ module "key_vault" {
   client_ip_address   = local.common.client_ip_address
   tenant_id           = local.common.tenant_id
 }
+
+module "key_vault_secret" {
+  source = "../../modules/key_vault_secret"
+
+  key_vault        = module.key_vault.key_vault
+  key_vault_secret = local.key_vault_secret
+}
