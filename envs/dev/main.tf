@@ -155,3 +155,22 @@ module "cosmosdb" {
   cosmosdb_sql_database  = var.cosmosdb_sql_database
   cosmosdb_sql_container = var.cosmosdb_sql_container
 }
+
+module "diagnostic_setting" {
+  source = "../../modules/diagnostic_setting"
+
+  common                  = var.common
+  log_analytics_workspace = module.log_analytics.log_analytics
+  storage_account         = module.storage.storage_account
+
+  diagnostic_setting = {
+    target_log_analytics_workspace = "logs"
+    target_storage_account         = "log"
+    target_resources = merge(
+      { for k, v in module.storage.storage_account : format("storage_account_%s", k) => v.id },
+      { for k, v in module.storage.storage_account : format("blob_%s", k) => format("%s/blobServices/default", v.id) },
+      { for k, v in module.key_vault.key_vault : format("key_vault_%s", k) => v.id },
+      { for k, v in module.cosmosdb.cosmosdb_account : format("cosmosdb_%s", k) => v.id },
+    )
+  }
+}
