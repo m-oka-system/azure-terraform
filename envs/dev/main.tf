@@ -145,3 +145,13 @@ module "key_vault_secret" {
   key_vault        = module.key_vault.key_vault
   key_vault_secret = local.key_vault_secret
 }
+
+module "cosmosdb" {
+  source = "../../modules/cosmosdb"
+
+  common                 = var.common
+  resource_group_name    = module.resource_group.resource_group_name
+  cosmosdb_account       = var.cosmosdb_account
+  cosmosdb_sql_database  = var.cosmosdb_sql_database
+  cosmosdb_sql_container = var.cosmosdb_sql_container
+}
