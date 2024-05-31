@@ -26,10 +26,10 @@ variable "network" {
 
 variable "subnet" {
   type = map(object({
-    name                                      = string
-    target_vnet                               = string
-    address_prefixes                          = list(string)
-    private_endpoint_network_policies_enabled = bool
+    name                              = string
+    target_vnet                       = string
+    address_prefixes                  = list(string)
+    private_endpoint_network_policies = string
     service_delegation = object({
       name    = string
       actions = list(string)
@@ -37,48 +37,48 @@ variable "subnet" {
   }))
   default = {
     pe = {
-      name                                      = "pe"
-      target_vnet                               = "spoke1"
-      address_prefixes                          = ["10.10.0.0/24"]
-      private_endpoint_network_policies_enabled = true
-      service_delegation                        = null
+      name                              = "pe"
+      target_vnet                       = "spoke1"
+      address_prefixes                  = ["10.10.0.0/24"]
+      private_endpoint_network_policies = "Enabled"
+      service_delegation                = null
     }
     app = {
-      name                                      = "app"
-      target_vnet                               = "spoke1"
-      address_prefixes                          = ["10.10.1.0/24"]
-      private_endpoint_network_policies_enabled = false
+      name                              = "app"
+      target_vnet                       = "spoke1"
+      address_prefixes                  = ["10.10.1.0/24"]
+      private_endpoint_network_policies = "Disabled"
       service_delegation = {
         name    = "Microsoft.Web/serverFarms"
         actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
       }
     }
     function = {
-      name                                      = "function"
-      target_vnet                               = "spoke1"
-      address_prefixes                          = ["10.10.2.0/24"]
-      private_endpoint_network_policies_enabled = false
+      name                              = "function"
+      target_vnet                       = "spoke1"
+      address_prefixes                  = ["10.10.2.0/24"]
+      private_endpoint_network_policies = "Disabled"
       service_delegation = {
         name    = "Microsoft.Web/serverFarms"
         actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
       }
     }
     db = {
-      name                                      = "db"
-      target_vnet                               = "spoke1"
-      address_prefixes                          = ["10.10.3.0/24"]
-      private_endpoint_network_policies_enabled = false
+      name                              = "db"
+      target_vnet                       = "spoke1"
+      address_prefixes                  = ["10.10.3.0/24"]
+      private_endpoint_network_policies = "Disabled"
       service_delegation = {
         name    = "Microsoft.DBforMySQL/flexibleServers"
         actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
       }
     }
     vm = {
-      name                                      = "vm"
-      target_vnet                               = "spoke1"
-      address_prefixes                          = ["10.10.4.0/24"]
-      private_endpoint_network_policies_enabled = false
-      service_delegation                        = null
+      name                              = "vm"
+      target_vnet                       = "spoke1"
+      address_prefixes                  = ["10.10.4.0/24"]
+      private_endpoint_network_policies = "Disabled"
+      service_delegation                = null
     }
   }
 }

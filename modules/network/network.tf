@@ -10,12 +10,12 @@ resource "azurerm_virtual_network" "this" {
 }
 
 resource "azurerm_subnet" "this" {
-  for_each                                  = var.subnet
-  name                                      = each.value.name
-  resource_group_name                       = var.resource_group_name
-  virtual_network_name                      = azurerm_virtual_network.this[each.value.target_vnet].name
-  address_prefixes                          = each.value.address_prefixes
-  private_endpoint_network_policies_enabled = each.value.private_endpoint_network_policies_enabled
+  for_each                          = var.subnet
+  name                              = each.value.name
+  resource_group_name               = var.resource_group_name
+  virtual_network_name              = azurerm_virtual_network.this[each.value.target_vnet].name
+  address_prefixes                  = each.value.address_prefixes
+  private_endpoint_network_policies = each.value.private_endpoint_network_policies
 
   dynamic "delegation" {
     for_each = lookup(each.value, "service_delegation", null) != null ? [each.value.service_delegation] : []
