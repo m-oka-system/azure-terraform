@@ -571,7 +571,7 @@ variable "cosmosdb_account" {
       geo_location = {
         location          = "japaneast"
         failover_priority = 0
-        zone_redundant    = true
+        zone_redundant    = false
       }
       capacity = {
         total_throughput_limit = 1000
