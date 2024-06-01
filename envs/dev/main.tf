@@ -184,3 +184,13 @@ module "openai" {
   openai_deployment   = var.openai_deployment
   allowed_cidr        = local.common.allowed_cidr
 }
+
+module "aisearch" {
+  source = "../../modules/aisearch"
+
+  count               = local.aisearch_enabled ? 1 : 0
+  common              = var.common
+  resource_group_name = module.resource_group.resource_group_name
+  aisearch            = var.aisearch
+  allowed_cidr        = local.common.allowed_cidr
+}

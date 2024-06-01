@@ -694,3 +694,26 @@ variable "openai_deployment" {
     }
   }
 }
+
+variable "aisearch" {
+  type = map(object({
+    name                          = string
+    sku                           = string
+    semantic_search_sku           = string
+    partition_count               = number
+    replica_count                 = number
+    public_network_access_enabled = bool
+    allowed_ips                   = list(string)
+  }))
+  default = {
+    app = {
+      name                          = "search"
+      sku                           = "standard"
+      semantic_search_sku           = "standard"
+      partition_count               = 1
+      replica_count                 = 1
+      public_network_access_enabled = true
+      allowed_ips                   = []
+    }
+  }
+}

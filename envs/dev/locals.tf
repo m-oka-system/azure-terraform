@@ -1,4 +1,8 @@
 locals {
+
+  # 特定の Azure リソースを作成する/しない
+  aisearch_enabled = false
+
   common = {
     subscription_id   = data.azurerm_subscription.primary.subscription_id
     tenant_id         = data.azurerm_subscription.primary.tenant_id
