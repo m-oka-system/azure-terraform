@@ -39,12 +39,12 @@ module "resource_group" {
   common = var.common
 }
 
-module "network" {
-  source = "../../modules/network"
+module "vnet" {
+  source = "../../modules/vnet"
 
   common              = var.common
   resource_group_name = module.resource_group.resource_group_name
-  network             = var.network
+  vnet                = var.vnet
   subnet              = var.subnet
 }
 
@@ -86,7 +86,7 @@ module "function" {
   app_settings         = local.functions.app_settings
   app_service_plan     = module.app_service_plan.app_service_plan
   allowed_cidr         = var.allowed_cidr
-  subnet               = module.network.subnet
+  subnet               = module.vnet.subnet
   application_insights = module.application_insights.application_insights
   container_registry   = module.container_registry.container_registry
   identity             = module.user_assigned_identity.user_assigned_identity

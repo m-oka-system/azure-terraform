@@ -11,7 +11,7 @@ variable "allowed_cidr" {
   type = string
 }
 
-variable "network" {
+variable "vnet" {
   type = map(object({
     name          = string
     address_space = list(string)
