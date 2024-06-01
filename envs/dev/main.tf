@@ -174,3 +174,13 @@ module "diagnostic_setting" {
     )
   }
 }
+
+module "openai" {
+  source = "../../modules/openai"
+
+  common              = var.common
+  resource_group_name = module.resource_group.resource_group_name
+  openai              = var.openai
+  openai_deployment   = var.openai_deployment
+  allowed_cidr        = local.common.allowed_cidr
+}

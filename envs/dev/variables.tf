@@ -625,3 +625,72 @@ variable "cosmosdb_sql_container" {
     }
   }
 }
+
+variable "openai" {
+  type = map(object({
+    name     = string
+    location = string
+    kind     = string
+    sku_name = string
+    network_acls = object({
+      default_action = string
+      ip_rules       = list(string)
+    })
+  }))
+  default = {
+    eastus = {
+      name     = "oai-eastus"
+      location = "eastus"
+      kind     = "OpenAI"
+      sku_name = "S0"
+      network_acls = {
+        default_action = "Deny"
+        ip_rules       = []
+      }
+    }
+  }
+}
+
+variable "openai_deployment" {
+  type = map(object({
+    name                   = string
+    target_openai          = string
+    version_upgrade_option = string
+    model = object({
+      name    = string
+      version = optional(string)
+    })
+    scale = object({
+      type     = string
+      capacity = number
+    })
+  }))
+  default = {
+    gpt-4o = {
+      name                   = "gpt-4o"
+      target_openai          = "eastus"
+      version_upgrade_option = "OnceNewDefaultVersionAvailable"
+      model = {
+        name    = "gpt-4o"
+        version = "2024-05-13"
+      }
+      scale = {
+        type     = "Standard"
+        capacity = 10
+      }
+    }
+    gpt-35-turbo = {
+      name                   = "gpt-35-turbo"
+      target_openai          = "eastus"
+      version_upgrade_option = "OnceNewDefaultVersionAvailable"
+      model = {
+        name    = "gpt-35-turbo"
+        version = "0301"
+      }
+      scale = {
+        type     = "Standard"
+        capacity = 10
+      }
+    }
+  }
+}
