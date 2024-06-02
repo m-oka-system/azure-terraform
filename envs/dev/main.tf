@@ -156,6 +156,21 @@ module "cosmosdb" {
   cosmosdb_sql_container = var.cosmosdb_sql_container
 }
 
+module "mysql" {
+  source = "../../modules/mysql"
+
+  count               = local.mysql_enabled ? 1 : 0
+  common              = var.common
+  resource_group_name = module.resource_group.resource_group_name
+  random              = local.common.random
+  mysql               = var.mysql
+  db_username         = var.db_username
+  db_password         = var.db_password
+  mysql_database      = var.mysql_database
+  vnet                = module.vnet.vnet
+  subnet              = module.vnet.subnet
+}
+
 module "diagnostic_setting" {
   source = "../../modules/diagnostic_setting"
 
