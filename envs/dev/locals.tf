@@ -3,6 +3,7 @@ locals {
   # 特定の Azure リソースを作成する/しない
   aisearch_enabled = false
   mysql_enabled    = false
+  redis_enabled    = false
 
   common = {
     subscription_id   = data.azurerm_subscription.primary.subscription_id

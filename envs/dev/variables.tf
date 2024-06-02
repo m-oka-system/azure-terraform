@@ -683,6 +683,31 @@ variable "mysql_database" {
   }
 }
 
+variable "redis" {
+  type = map(object({
+    name                          = string
+    capacity                      = number
+    family                        = string
+    sku_name                      = string
+    redis_version                 = number
+    public_network_access_enabled = bool
+    enable_non_ssl_port           = bool
+    minimum_tls_version           = string
+  }))
+  default = {
+    app = {
+      name                          = "redis"
+      capacity                      = 0
+      family                        = "C"
+      sku_name                      = "Basic"
+      redis_version                 = 6
+      public_network_access_enabled = false
+      enable_non_ssl_port           = false
+      minimum_tls_version           = "1.2"
+    }
+  }
+}
+
 variable "openai" {
   type = map(object({
     name     = string

@@ -171,6 +171,16 @@ module "mysql" {
   subnet              = module.vnet.subnet
 }
 
+module "redis" {
+  source = "../../modules/redis"
+
+  count               = local.redis_enabled ? 1 : 0
+  common              = var.common
+  resource_group_name = module.resource_group.resource_group_name
+  random              = local.common.random
+  redis               = var.redis
+}
+
 module "diagnostic_setting" {
   source = "../../modules/diagnostic_setting"
 
