@@ -649,7 +649,7 @@ variable "mysql" {
       target_vnet                  = "spoke1"
       target_subnet                = "db"
       db_port                      = 3306
-      db_size                      = "B_Standard_B1s"
+      db_size                      = "B_Standard_B1ms"
       version                      = "8.0.21"
       zone                         = "1"
       backup_retention_days        = 7
